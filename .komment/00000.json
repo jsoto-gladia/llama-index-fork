@@ -1,0 +1,1224 @@
+[
+  {
+    "name": "schema.py",
+    "path": "llama-index-core/llama_index/core/schema.py",
+    "content": {
+      "structured": {
+        "description": "Various data classes and mixins for representing different types of documents in a knowledge graph, including `Document`, `ImageDocument`, and `QueryBundle`. The code also defines various methods and properties for working with these document types, such as converting between different formats, sending documents to a vector space for embedding, and querying the knowledge graph using custom or default embeddings.\n\nThe code uses Python's `dataclass` and `json` modules, as well as the `llama_cloud` package for working with LlamaCloud, a cloud-based knowledge graph platform.",
+        "items": [
+          {
+            "id": "ce132644-8e13-309c-6c4a-d4cd55b85c3e",
+            "ancestors": [
+              "37015f21-fbe7-58b3-f04d-274e70d1fe06"
+            ],
+            "description": "Defines a static method, `schema_extra`, which adds a property to a schema with the name of a class inheriting from `BaseComponent`.",
+            "attributes": [],
+            "name": "Config",
+            "location": {
+              "start": 38,
+              "insert": 39,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "bd6a1f56-626d-3b9e-b14c-d9b4abde3b86",
+            "ancestors": [
+              "37015f21-fbe7-58b3-f04d-274e70d1fe06"
+            ],
+            "description": "Creates a new dictionary containing the properties of the object, including the \"class_name\" property that is computed using the class's `class_name()` method.",
+            "params": [
+              {
+                "name": "**kwargs",
+                "type_name": "Any",
+                "description": "Dictionary of keyword arguments"
+              }
+            ],
+            "returns": {
+              "type_name": "Dict[str, Any]",
+              "description": "A dictionary containing the keys \"class_name\" with the value of self.class_name() and the rest of the data returned by super().dict(**kwargs)."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from pydantic import BaseModel\n\nclass MyComponent(BaseComponent):\n    class_name = \"my_component\"\n\n# Create a MyComponent object and convert it to a dictionary\nmy_object = MyComponent()\nmy_dict = my_object.dict()\n\nprint(my_dict) # Output: {'class_name': 'MyComponent'}\n",
+              "description": ""
+            },
+            "name": "dict",
+            "location": {
+              "start": 61,
+              "insert": 62,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "a49a8bfa-5a73-babe-3c46-f02d2e772b34",
+            "ancestors": [
+              "37015f21-fbe7-58b3-f04d-274e70d1fe06"
+            ],
+            "description": "Removes unnecessary data from the instance's state before serializing it, including the tokenizer attribute and any private attribute values.",
+            "params": [],
+            "returns": {
+              "type_name": "Dict[str, Any]",
+              "description": "A dictionary containing the object's state, with certain keys removed or modified to follow the conventions of Python's serialization mechanism."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Import the BaseComponent class and its methods\nfrom my_module import BaseComponent\n\n# Create a new instance of BaseComponent\ncomponent = BaseComponent()\n\n# Get the state of the component using __getstate__ method\nstate = component.__getstate__()\n\nprint(state) # Output: {\"class_name\": \"base_component\", ...}\n",
+              "description": ""
+            },
+            "name": "__getstate__",
+            "location": {
+              "start": 66,
+              "insert": 67,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 17,
+            "docLength": null
+          },
+          {
+            "id": "fecf0b61-a515-49b9-0741-d01e0543ad46",
+            "ancestors": [
+              "37015f21-fbe7-58b3-f04d-274e70d1fe06"
+            ],
+            "description": "Reinitializes instance variables from a dictionary, ensuring all variables are properly initialized upon state restoration.",
+            "params": [
+              {
+                "name": "state",
+                "type_name": "Dict[str, Any]",
+                "description": "Passed as an argument to the method representing a dictionary containing the state of the object."
+              }
+            ],
+            "returns": null,
+            "usage": {
+              "language": "python",
+              "code": "import json\nfrom transformers import BaseComponent\n\n# Create a new instance of the BaseComponent class\ncomponent = BaseComponent()\n\n# Define a dictionary to hold the state information\nstate_dict = {\"key1\": \"value1\", \"key2\": 2}\n\n# Use the __setstate__ method to set the state of the component object\ncomponent.__setstate__(state_dict)\n\n# Convert the component object to JSON format using the json library\njson_string = json.dumps(component, indent=4)\nprint(json_string)\n",
+              "description": ""
+            },
+            "name": "__setstate__",
+            "location": {
+              "start": 88,
+              "insert": 91,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "39c9a727-cfaf-ad8b-1941-2f7f3e315cd2",
+            "ancestors": [
+              "37015f21-fbe7-58b3-f04d-274e70d1fe06"
+            ],
+            "description": "Transforms class attributes into a dictionary representation, including a custom attribute for the class name.",
+            "params": [
+              {
+                "name": "**kwargs",
+                "type_name": "Any",
+                "description": "Dictionary of keyword arguments"
+              }
+            ],
+            "returns": {
+              "type_name": "Dict[str, Any]",
+              "description": "A dictionary containing class name and other attributes generated by calling method `dict` with keyword arguments **kwargs"
+            },
+            "usage": {
+              "language": "python",
+              "code": "from typing import Any, Dict\nimport BaseComponent\n\n# Initialize an instance of the BaseComponent class\nmy_component = BaseComponent()\n\n# Create a dictionary from the instance using the to_dict method\ndata = my_component.to_dict(**kwargs)\n\n# Print the resulting dictionary\nprint(data)\n",
+              "description": "\nThis code creates an instance of the BaseComponent class and uses its to_dict method to convert it to a dictionary. The resulting dictionary contains the class name as well as any other data that was stored in the component, such as any configuration or state variables. The user can then use this dictionary for further processing or storage.\n\nIt is important to note that the user should replace \"**kwargs\" with appropriate arguments if they want to pass specific parameters to the method."
+            },
+            "name": "to_dict",
+            "location": {
+              "start": 97,
+              "insert": 98,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "18c97dc1-6110-6d82-9b42-cc781b7368a0",
+            "ancestors": [
+              "37015f21-fbe7-58b3-f04d-274e70d1fe06"
+            ],
+            "description": "Converts data from a Python object to a JSON string by calling the `to_dict` method and then using `json.dumps`.",
+            "params": [
+              {
+                "name": "**kwargs",
+                "type_name": "Any",
+                "description": "Dictionary of keyword arguments"
+              }
+            ],
+            "returns": {
+              "type_name": "str",
+              "description": "A string representation of a dictionary data generated from calling the `to_dict` method with the provided keyword arguments."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from typing import Any\nfrom pydantic import BaseModel\n\nclass MyComponent(BaseModel):\n    class Config:\n        @staticmethod\n        def schema_extra(schema: Dict[str, Any], model: \"MyComponent\") -> None:\n            schema[\"properties\"][\"class_name\"] = {\n                \"title\": \"Class Name\",\n                \"type\": \"string\",\n                \"default\": model.class_name(),\n            }\n\n    @classmethod\n    def class_name(cls) -> str:\n        return \"my_component\"\n\n    def json(self, **kwargs: Any) -> str:\n        return self.to_json(**kwargs)\n\n    def dict(self, **kwargs: Any) -> Dict[str, Any]:\n        data = super().dict(**kwargs)\n        data[\"class_name\"] = self.class_name()\n        return data\n\n# Create a MyComponent instance\nmy_component = MyComponent(some_field=123)\n\n# Convert the instance to JSON\njson_string = my_component.to_json()\n",
+              "description": "\nIn this example, we create an instance of the `MyComponent` class and then call the `to_json()` method on it. The resulting JSON string is stored in the `json_string` variable. Note that the `to_json()` method is a method of the `BaseModel` class, which is inherited by our custom component class."
+            },
+            "name": "to_json",
+            "location": {
+              "start": 102,
+              "insert": 103,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "9b001034-fe19-8c93-f447-1604b43c4d6f",
+            "ancestors": [
+              "37015f21-fbe7-58b3-f04d-274e70d1fe06"
+            ],
+            "description": "Takes a dictionary of data and updates it with any additional keyword arguments provided, while removing certain unneeded keys such as \"relationships\" and \"class_name\". It then creates an instance of the class using the updated data.",
+            "params": [
+              {
+                "name": "data",
+                "type_name": "Dict[str, Any]",
+                "description": "Used to initialize an object of a class."
+              },
+              {
+                "name": "**kwargs",
+                "type_name": "Any",
+                "description": "Dictionary of keyword arguments"
+              }
+            ],
+            "returns": {
+              "type_name": "Self",
+              "description": "A subclass of `Dict`."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Create a new instance of BaseComponent using the from_dict method and pass in a dictionary as an argument\ndata = {\"name\": \"John Doe\", \"age\": 30}\nmy_base_component = BaseComponent.from_dict(data)\n\n# Print out the name of the BaseComponent object created\nprint(my_base_component.name) # Output: John Doe\n",
+              "description": "\nIn this example, we pass a dictionary as an argument to the from_dict method of the BaseComponent class, which creates a new instance of BaseComponent using the data in the dictionary. We then print out the name attribute of the created object, which is \"John Doe\"."
+            },
+            "name": "from_dict",
+            "location": {
+              "start": 107,
+              "insert": 109,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "59b6c206-1fbd-bbae-634a-84898366219c",
+            "ancestors": [
+              "37015f21-fbe7-58b3-f04d-274e70d1fe06"
+            ],
+            "description": "Loads JSON data into an instance of the class using the `json.loads()` function and returns an instance of the same class.",
+            "params": [
+              {
+                "name": "data_str",
+                "type_name": "str",
+                "description": "A JSON-formatted string that contains the data to be parsed and converted into an instance of the `cls` class."
+              },
+              {
+                "name": "**kwargs",
+                "type_name": "Any",
+                "description": "Dictionary of keyword arguments"
+              }
+            ],
+            "returns": {
+              "type_name": "Self",
+              "description": "A subclass of the class `cls`."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Assuming 'data_str' is a string containing JSON data,\n# and '**kwargs' are any additional keyword arguments required for the function.\ncomponent = BaseComponent.from_json(data_str, **kwargs)\n\n# Do something with the component object...\nprint(component)\n",
+              "description": ""
+            },
+            "name": "from_json",
+            "location": {
+              "start": 116,
+              "insert": 118,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "0602c9ba-1909-0ca8-7946-6682729832e5",
+            "ancestors": [],
+            "description": "Defines four constants representing different types of objects: `TEXT`, `IMAGE`, `INDEX`, and `DOCUMENT`. These constants are defined using the `auto()` function, which automatically generates a unique name for each constant.",
+            "attributes": [
+              {
+                "name": "TEXT",
+                "type_name": "auto",
+                "description": "Automatically generated by the compiler."
+              },
+              {
+                "name": "IMAGE",
+                "type_name": "auto",
+                "description": "Automatically generated by the compiler, serving as a unique identifier for each object instance."
+              },
+              {
+                "name": "INDEX",
+                "type_name": "auto",
+                "description": "Automatically generated by the compiler."
+              },
+              {
+                "name": "DOCUMENT",
+                "type_name": "str|Document",
+                "description": "Generated automatically by the compiler."
+              }
+            ],
+            "name": "ObjectType",
+            "location": {
+              "start": 156,
+              "insert": 157,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "40c0f728-c48d-239b-6049-754a5041304e",
+            "ancestors": [],
+            "description": "Defines three enumeration values: `ALL`, `EMBED`, and `LLM`. These values represent different modes for managing metadata in a neural network.",
+            "attributes": [
+              {
+                "name": "ALL",
+                "type_name": "str",
+                "description": "Defined as \"all\"."
+              },
+              {
+                "name": "EMBED",
+                "type_name": "str",
+                "description": "One of the possible values that can be assigned to the mode parameter of various methods in the class, indicating that the metadata should be embedded within the associated media file rather than being stored separately."
+              },
+              {
+                "name": "LLM",
+                "type_name": "str",
+                "description": "3-letter abbreviation for \"Linguistic Labeling Mode\"."
+              },
+              {
+                "name": "NONE",
+                "type_name": "str",
+                "description": "Defined as having a value of \"none\". It indicates that no metadata should be included"
+              }
+            ],
+            "name": "MetadataMode",
+            "location": {
+              "start": 163,
+              "insert": 164,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "c52869b4-c463-d29c-cb45-9bdbe44f7658",
+            "ancestors": [],
+            "description": "Serves as a container for various metadata related to a node, including its ID, type (optional), and custom metadata field. It also has a static method to return the class name.",
+            "attributes": [
+              {
+                "name": "node_id",
+                "type_name": "str",
+                "description": "Used to identify a unique node within a hierarchical structure."
+              },
+              {
+                "name": "node_type",
+                "type_name": "Optional[ObjectType]",
+                "description": "Used to specify the type of node associated with the related information."
+              },
+              {
+                "name": "metadata",
+                "type_name": "Dict[str, Any]",
+                "description": "Used to store arbitrary metadata related to the node."
+              },
+              {
+                "name": "hash",
+                "type_name": "Optional[str]",
+                "description": "Used to store a unique identifier for each related node information instance."
+              }
+            ],
+            "name": "RelatedNodeInfo",
+            "location": {
+              "start": 170,
+              "insert": 171,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 9,
+            "docLength": null
+          },
+          {
+            "id": "f1bb7ece-303e-208d-4341-5d5b4b2bdb31",
+            "ancestors": [
+              "c52869b4-c463-d29c-cb45-9bdbe44f7658"
+            ],
+            "description": "Returns a string value indicating the type of related node information.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "\"RelatedNodeInfo\"."
+            },
+            "usage": {
+              "language": "python",
+              "code": "node = RelatedNodeInfo()\nnode.class_name() # Returns \"RelatedNodeInfo\"\n",
+              "description": ""
+            },
+            "name": "class_name",
+            "location": {
+              "start": 176,
+              "insert": 178,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "a5b13b6f-23e4-a8b5-e04d-f1d4ff0ef423",
+            "ancestors": [
+              "5ebb0bdf-e1e7-26ae-964a-229d57306253"
+            ],
+            "description": "Determines if configuration values can be populated by field names and validates assignments.",
+            "attributes": [
+              {
+                "name": "allow_population_by_field_name",
+                "type_name": "bool",
+                "description": "Set to True, indicating that the configuration object can be populated by field names directly instead of through a specific method."
+              },
+              {
+                "name": "validate_assignment",
+                "type_name": "bool",
+                "description": "Set to `True`, indicating that assignment to a field name is validated."
+              }
+            ],
+            "name": "Config",
+            "location": {
+              "start": 192,
+              "insert": 193,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "a9112298-8e1e-8c8f-e849-f69504d983f7",
+            "ancestors": [
+              "5ebb0bdf-e1e7-26ae-964a-229d57306253"
+            ],
+            "description": "Retrieves and returns the `id` attribute of the object, converted to a string.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A unique identifier assigned to each node in the graph"
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Create an instance of BaseNode class\nnode = BaseNode()\n\n# Set the id field of the node\nnode.id = \"node1\"\n\n# Get the value of the id field of the node\nprint(node.id)  # Output: node1\n",
+              "description": ""
+            },
+            "name": "node_id",
+            "location": {
+              "start": 251,
+              "insert": 253,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "a9b77bcd-ca3c-a9a2-0f4f-276ab6e0ae65",
+            "ancestors": [
+              "5ebb0bdf-e1e7-26ae-964a-229d57306253"
+            ],
+            "description": "Sets the `id_` attribute to a provided string value, serving as an identifier for the node.",
+            "params": [
+              {
+                "name": "value",
+                "type_name": "str",
+                "description": "Set to a new value for the node, updating its ID attribute."
+              }
+            ],
+            "returns": null,
+            "usage": {
+              "language": "python",
+              "code": "from pydantic import BaseNode\n\nnode = BaseNode(node_id=\"my_unique_node_id\")\nprint(node.node_id) # Outputs \"my_unique_node_id\"\n",
+              "description": "\nIn this example, we first create an instance of the `BaseNode` class and set its `node_id` attribute to `\"my_unique_node_id\"`. We then print out the value of the `node_id` attribute using the `print()` function. The output should be the string `\"my_unique_node_id\"`.\n\nNote that this is just an example, and you would need to modify it to fit your specific use case. Additionally, this example assumes that you have already imported the necessary modules and defined any necessary classes or functions."
+            },
+            "name": "node_id",
+            "location": {
+              "start": 255,
+              "insert": 257,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "b10c055f-e58c-70a9-8348-fab7bfe79beb",
+            "ancestors": [
+              "5ebb0bdf-e1e7-26ae-964a-229d57306253"
+            ],
+            "description": "Generates a string representation of the node by truncating its content, wrapping it to a specified width, and adding the node ID and original text as a suffix.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A string that consists of the node ID followed by the wrapped text."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Create a new node object\nnode = BaseNode(id_=\"my_unique_id\", embedding=[0.1, 0.2, 0.3], metadata={\"key\": \"value\"}, excluded_embed_metadata_keys=[\"key\"], excluded_llm_metadata_keys=[\"key\"])\n\n# Print the string representation of the node\nprint(node)\n",
+              "description": "\nIn this example, we create a new node object with some attributes and then print its string representation using the __str__ method. The output would be something like:\n"
+            },
+            "name": "__str__",
+            "location": {
+              "start": 331,
+              "insert": 332,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "a66806be-f663-f089-4141-eaef2e6d15cb",
+            "ancestors": [],
+            "description": "Represents a text node in a document, with properties for its text content, MIME type, start and end character indices, metadata template, and metadata values. It also provides methods for getting and setting the text content, metadata, and node information.",
+            "attributes": [
+              {
+                "name": "text",
+                "type_name": "str",
+                "description": "Default empty string value representing the text content of the node."
+              },
+              {
+                "name": "mimetype",
+                "type_name": "str",
+                "description": "Defaulted to \"text/plain\". It represents the MIME type of the node's content."
+              },
+              {
+                "name": "start_char_idx",
+                "type_name": "Optional[int]",
+                "description": "Defaulted to None, indicating the index of the starting character of the text content within a larger document or field."
+              },
+              {
+                "name": "end_char_idx",
+                "type_name": "Optional[int]",
+                "description": "Defaulted to None, indicating the index of the last character of the node's text content."
+              },
+              {
+                "name": "text_template",
+                "type_name": "str",
+                "description": "A template for how text is formatted with placeholders for content and metadata strings."
+              },
+              {
+                "name": "metadata_template",
+                "type_name": "str",
+                "description": "Used to format metadata fields with placeholders for key and value."
+              },
+              {
+                "name": "metadata_seperator",
+                "type_name": "str",
+                "description": "Defaulted to a newline character(\\n). It represents the separator between metadata fields when converting to string."
+              }
+            ],
+            "name": "TextNode",
+            "location": {
+              "start": 360,
+              "insert": 361,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 86,
+            "docLength": null
+          },
+          {
+            "id": "8be47a8e-50a8-3c8c-064b-55937df41bdf",
+            "ancestors": [
+              "a66806be-f663-f089-4141-eaef2e6d15cb"
+            ],
+            "description": "Returns a string representing the class name of the object.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "\"TextNode\"."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Create a TextNode object\ntext_node = TextNode(text=\"This is some sample text\", mimetype=\"text/plain\")\n\n# Get the class name of the TextNode object\nprint(text_node.class_name()) # Output: \"TextNode\"\n",
+              "description": ""
+            },
+            "name": "class_name",
+            "location": {
+              "start": 390,
+              "insert": 392,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "a66e1f69-68db-4999-054b-d19839baf57d",
+            "ancestors": [
+              "a66806be-f663-f089-4141-eaef2e6d15cb"
+            ],
+            "description": "Generates a unique hash value for the node by combining the text and metadata using SHA-256 hashing algorithm, storing it as a hexadecimal string property.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A SHA-256 hash of the concatenation of the text and metadata properties."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from TextNode import TextNode\n\n# create a new TextNode object\nnode = TextNode(\"This is a sample text\", \"text/plain\")\n\n# compute the hash of the node's text and metadata\nhash_value = node.hash\n\nprint(f\"The hash value for this TextNode is: {hash_value}\")\n",
+              "description": "\nIn this example, we first create a new `TextNode` object with some sample text and a MIME type. We then use the `hash` method of the `TextNode` class to compute the hash of the node's text and metadata. Finally, we print the computed hash value to the console.\n\nNote that this is just an example, and in practice, you might need to modify the code to fit your specific needs. For instance, you might want to use a different hashing algorithm or add additional metadata fields to the `TextNode` object."
+            },
+            "name": "hash",
+            "location": {
+              "start": 394,
+              "insert": 396,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "37f43cee-00ad-c694-b14a-669a43a0fa6f",
+            "ancestors": [
+              "4ee8380e-400c-7399-6c43-e6b1f7c68a12"
+            ],
+            "description": "Returns the string \"IMAGE\".",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "The object's type represented as a string."
+            },
+            "usage": {
+              "language": "python",
+              "code": "image = ImageNode()  # Instantiate an image node object\nobject_type = image.get_type()  # Call the get_type method on the image node object\nprint(object_type)  # Outputs \"IMAGE\" as a string\n",
+              "description": ""
+            },
+            "name": "get_type",
+            "location": {
+              "start": 472,
+              "insert": 474,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "d65a6d9f-4d61-a88d-0c41-4d96a673b8e2",
+            "ancestors": [
+              "4ee8380e-400c-7399-6c43-e6b1f7c68a12"
+            ],
+            "description": "Returns a string representing the image node's class name.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A string containing the text \"ImageNode\"."
+            },
+            "usage": {
+              "language": "python",
+              "code": "image = ImageNode()\n# Set the image path or URL\nimage.image_path = \"path/to/image\"\n# Resolve the image\nresolved_image = image.resolve_image()\n",
+              "description": ""
+            },
+            "name": "class_name",
+            "location": {
+              "start": 476,
+              "insert": 478,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "ee39efb8-3516-3488-d840-686cc1e076e2",
+            "ancestors": [
+              "72d316f5-1ae9-62aa-3b48-aca4d85ac525"
+            ],
+            "description": "Creates a dictionary containing the node's properties and an optional serialized version of its obj attribute, using `doc_to_json` or `json.dumps`.",
+            "params": [
+              {
+                "name": "**kwargs",
+                "type_name": "Any",
+                "description": "Dictionary of keyword arguments"
+              }
+            ],
+            "returns": {
+              "type_name": "Dict[str, Any]",
+              "description": "A dictionary containing the serialized form of the IndexNode's obj attribute."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from llama_index.core.storage.docstore.utils import doc_to_json\n\n# create an IndexNode instance and assign it to a variable named index_node\nindex_node = IndexNode(index_id=\"my_index\", obj=None)\n\n# convert the IndexNode instance to a dictionary\ndict = index_node.dict()\n\n# serialize the dictionary to JSON using the doc_to_json function from llama_index\njson_data = doc_to_json(dict)\n",
+              "description": ""
+            },
+            "name": "dict",
+            "location": {
+              "start": 511,
+              "insert": 512,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 18,
+            "docLength": null
+          },
+          {
+            "id": "f353ee10-6e74-9abb-3a43-a3bd9ae2eb9f",
+            "ancestors": [
+              "72d316f5-1ae9-62aa-3b48-aca4d85ac525"
+            ],
+            "description": "Converts a Python dict representation of an object into an IndexNode instance, handling various types of objects and recursively parsing complex ones using the json_to_doc function.",
+            "params": [
+              {
+                "name": "data",
+                "type_name": "Dict[str, Any]",
+                "description": "Used to pass a dictionary containing data that will be used to create an instance of the `Self` class."
+              },
+              {
+                "name": "**kwargs",
+                "type_name": "Any",
+                "description": "Dictionary of keyword arguments"
+              }
+            ],
+            "returns": {
+              "type_name": "Self",
+              "description": "An instance of the class `TextNode` or a dictionary containing the parsed object."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from llama_index.core.storage.docstore.utils import json_to_doc\n\n# Create a TextNode object with some text data\ndata = { \"obj\": {\"text\": \"some text\"} }\nnode = TextNode.from_dict(data)\n\n# Create an IndexNode object from the TextNode object, specifying an index ID\nindex_id = \"my-index\"\nindex_node = IndexNode.from_text_node(node, index_id)\n",
+              "description": ""
+            },
+            "name": "from_dict",
+            "location": {
+              "start": 544,
+              "insert": 546,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 19,
+            "docLength": null
+          },
+          {
+            "id": "0d6fb0a8-e87f-b391-b54d-3384ea30a469",
+            "ancestors": [
+              "72d316f5-1ae9-62aa-3b48-aca4d85ac525"
+            ],
+            "description": "Returns the string value \"INDEX\", indicating that the class represents an index node in a data structure.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "The ObjectType constant named INDEX."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from llama_index.core.storage.docstore.utils import doc_to_json\nfrom llama_index.core.storage.indexing.indexnode import IndexNode\n\n# create a TextNode object\ntext_node = TextNode(\"Hello World!\")\n\n# use the get_type method to retrieve the type of the node\nobj_type = text_node.get_type()\nprint(obj_type) # prints \"TEXT\"\n",
+              "description": "\nIn this example, we first create a TextNode object with a string argument passed into its constructor. Then, we call the get_type method on the TextNode object to retrieve the type of the node, which is a string value representing the type of the node. We then print out the type of the node using the `print()` function.\n\nIt's important to note that this example only illustrates how the get_type method might be used by an end-user, and it does not cover all possible use cases for this method. For more information on how to use this method effectively, you may want to consult the documentation for the IndexNode class or other relevant resources."
+            },
+            "name": "get_type",
+            "location": {
+              "start": 566,
+              "insert": 568,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "953d483b-c76d-0596-1547-19f4da9ece07",
+            "ancestors": [
+              "72d316f5-1ae9-62aa-3b48-aca4d85ac525"
+            ],
+            "description": "Simply returns a string value of \"IndexNode\".",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "\"IndexNode\"."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Assuming we have already created an instance of IndexNode named 'index'\nindex_id = index.class_name()\nprint(index_id)  # Outputs 'IndexNode'\n",
+              "description": "\nIn this example, the `index_id` variable is assigned the result of calling the `class_name()` method on the `index` instance of the IndexNode class. The output of this function is then printed to the console."
+            },
+            "name": "class_name",
+            "location": {
+              "start": 570,
+              "insert": 572,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "0f419910-95dd-529d-174b-6be8291dcb14",
+            "ancestors": [],
+            "description": "Extends `BaseComponent` and provides additional methods to access a node's score, get its text, metadata, and embedding. It also defines custom string representation and property definitions for its attributes.",
+            "attributes": [
+              {
+                "name": "node",
+                "type_name": "BaseNode",
+                "description": "Used to represent the underlying node in the tree structure."
+              },
+              {
+                "name": "score",
+                "type_name": "Optional[float]",
+                "description": "Used to store a score for the node."
+              }
+            ],
+            "name": "NodeWithScore",
+            "location": {
+              "start": 575,
+              "insert": 576,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 55,
+            "docLength": null
+          },
+          {
+            "id": "a8c5f84c-b361-9d88-ba47-32fe9172646f",
+            "ancestors": [
+              "0f419910-95dd-529d-174b-6be8291dcb14"
+            ],
+            "description": "Generates a string representation of an instance by printing its node and score as floating-point numbers with precision 3 digits, or \"None\" if the score is nonexistent.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A string representation of the node object."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# create a node with score\nnode_with_score = NodeWithScore(node=\"This is a test\", score=0.8)\n\n# print the string representation of the node with score\nprint(node_with_score)\n",
+              "description": "\nIn this example, we create a `NodeWithScore` object and set its `score` attribute to 0.8. We then call the `__str__()` method on the object to get its string representation, which includes the `node` attribute and the `score` attribute formatted as a float with three decimal places. The resulting output would be \"This is a test\\nScore: 0.800\"."
+            },
+            "name": "__str__",
+            "location": {
+              "start": 579,
+              "insert": 580,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "2b7899a8-c164-3e91-a647-188a4bf52733",
+            "ancestors": [
+              "0f419910-95dd-529d-174b-6be8291dcb14"
+            ],
+            "description": "Defines a string representing the name of the class.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "\"NodeWithScore\"."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from my_package import NodeWithScore\n\n# Create a new instance of the NodeWithScore class\nnode = NodeWithScore(node=BaseNode(), score=0.5)\n\n# Use the class_name method to get the name of the class\nprint(node.class_name()) # Output: \"NodeWithScore\"\n",
+              "description": ""
+            },
+            "name": "class_name",
+            "location": {
+              "start": 593,
+              "insert": 595,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "da0f7e5a-ac9d-d2a9-2346-9e8bde188863",
+            "ancestors": [
+              "0f419910-95dd-529d-174b-6be8291dcb14"
+            ],
+            "description": "Returns the node ID of the underlying Node object.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A unique identifier for the nodes of the graph represented by its instance."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Create a NodeWithScore instance\nnode = NodeWithScore(BaseNode(\"example\"))\n\n# Get the node ID\nnode_id = node.node_id\n\n# Print the node ID\nprint(node_id)\n",
+              "description": "\nThis code creates a `NodeWithScore` instance with a `BaseNode` object and then retrieves the node ID using the `node_id` method. The retrieved node ID is then printed to the console."
+            },
+            "name": "node_id",
+            "location": {
+              "start": 598,
+              "insert": 600,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "645de193-22f1-3599-2149-dcaa29c11d21",
+            "ancestors": [
+              "0f419910-95dd-529d-174b-6be8291dcb14"
+            ],
+            "description": "Returns the ID of its parent Node object.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "The ID of the node that the class instance represents."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from pathlib import Path\nfrom typing import Optional\n\n# create a new node with score\nnode = NodeWithScore(id_='123', score=0.8)\n\n# get the id of the node\nprint(node.id_) # output: '123'\n",
+              "description": ""
+            },
+            "name": "id_",
+            "location": {
+              "start": 602,
+              "insert": 604,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "a5a59973-54e1-c384-6941-f846b65abe38",
+            "ancestors": [
+              "0f419910-95dd-529d-174b-6be8291dcb14"
+            ],
+            "description": "Determines the text value of an instance based on its node attributes and raises a ValueError if the node is not a TextNode.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "The text content of a `TextNode`."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Create an instance of NodeWithScore class with a TextNode object as its node property\nexample_node = NodeWithScore(TextNode(\"This is a sample text.\"))\n\n# Use the text method to get the text of the TextNode object\ntext = example_node.text\nprint(text) # Output: \"This is a sample text.\"\n",
+              "description": ""
+            },
+            "name": "text",
+            "location": {
+              "start": 606,
+              "insert": 608,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 6,
+            "docLength": null
+          },
+          {
+            "id": "32e09d0b-3c5b-28b9-8847-c5bbc4dd4ca9",
+            "ancestors": [
+              "0f419910-95dd-529d-174b-6be8291dcb14"
+            ],
+            "description": "Returns a dictionary containing metadata associated with the node, such as score values.",
+            "params": [],
+            "returns": {
+              "type_name": "Dict[str, Any]",
+              "description": "A dictionary containing metadata for the current node."
+            },
+            "usage": {
+              "language": "python",
+              "code": "node = NodeWithScore(BaseNode())\nnode.score = 0.8\nmetadata = node.metadata\nprint(f\"Node ID: {node.node_id}\")\nprint(f\"Score: {node.get_score()}\")\nprint(f\"Text: {node.text}\")\nprint(f\"Metadata: {metadata}\")\n",
+              "description": "\nIn this example, we first create an instance of the `NodeWithScore` class and assign it to a variable `node`. We then set the score attribute of the `node` object to 0.8 using the `score` property. Next, we retrieve the metadata for the node using the `metadata` property and print out the node ID, score, text, and metadata attributes."
+            },
+            "name": "metadata",
+            "location": {
+              "start": 613,
+              "insert": 615,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "dceca037-e240-65b3-4344-1defe32db3c7",
+            "ancestors": [
+              "0f419910-95dd-529d-174b-6be8291dcb14"
+            ],
+            "description": "Returns the embedding of the node, which is an optional list of floating-point numbers.",
+            "params": [],
+            "returns": {
+              "type_name": "Optional[List[float]]",
+              "description": "A list of floating-point numbers representing the node's embedding values."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Define a NodeWithScore class instance\nnode = NodeWithScore(BaseNode())\n\n# Set the node's score to 0.5\nnode.score = 0.5\n\n# Get the node's score\nprint(node.get_score()) # Output: 0.5\n",
+              "description": ""
+            },
+            "name": "embedding",
+            "location": {
+              "start": 617,
+              "insert": 619,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "c71d0743-9916-a38b-c84a-fef40fff900a",
+            "ancestors": [
+              "0f419910-95dd-529d-174b-6be8291dcb14"
+            ],
+            "description": "Retrieves the text content of a node, checking if it's a TextNode and returning its get_text() value otherwise raising a ValueError for non-TextNodes.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "The text contained within the provided node."
+            },
+            "usage": {
+              "language": "python",
+              "code": "node = TextNode(\"Hello World\")\nnode_with_score = NodeWithScore(node)\nprint(node_with_score.get_text()) # Outputs \"Hello World\"\n",
+              "description": ""
+            },
+            "name": "get_text",
+            "location": {
+              "start": 621,
+              "insert": 622,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "5d53ac9a-c893-e7ba-df48-40f99b88b2d3",
+            "ancestors": [
+              "88162fa8-1cec-f5bd-2d47-52e6389f9780"
+            ],
+            "description": "Returns a string representation of the document, including its ID and truncated text with wraparound for display purposes.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A string representation of the DocId and the truncated text followed by a wrapped text."
+            },
+            "usage": {
+              "language": "python",
+              "code": "doc = Document(id=\"my_doc\", content=\"This is a sample document.\")\nprint(f\"{doc}\")\n# Output: Doc ID: my_doc\\nText: This is a sample document.\n",
+              "description": ""
+            },
+            "name": "__str__",
+            "location": {
+              "start": 663,
+              "insert": 664,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "b651e4a8-d8fb-7bad-b943-2806f78ab38e",
+            "ancestors": [
+              "88162fa8-1cec-f5bd-2d47-52e6389f9780"
+            ],
+            "description": "Sets attributes on the document object by first checking for compatibility with the given name and value, and then calling the parent class's implementation of `__setattr__`.",
+            "params": [
+              {
+                "name": "name",
+                "type_name": "str",
+                "description": "Used to specify the name of the attribute being set."
+              },
+              {
+                "name": "value",
+                "type_name": "object",
+                "description": "Used to assign a new value to a field of an object."
+              }
+            ],
+            "returns": null,
+            "usage": {
+              "language": "python",
+              "code": "# Initialize a new Document object\ndocument = Document()\n\n# Set the document ID to a unique value\ndocument.doc_id = str(uuid.uuid4())\n\n# Get the document ID after setting it\nprint(document.get_doc_id()) # Outputs: <unique-value>\n",
+              "description": ""
+            },
+            "name": "__setattr__",
+            "location": {
+              "start": 676,
+              "insert": 677,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "d61cdf58-f89a-2f8d-bd4f-4b90e2f940e9",
+            "ancestors": [
+              "88162fa8-1cec-f5bd-2d47-52e6389f9780"
+            ],
+            "description": "Creates a new document with sample text and metadata.",
+            "params": [],
+            "returns": {
+              "type_name": "\"Document\"",
+              "description": "An instance of the `Document` class with pre-defined properties of text and metadata."
+            },
+            "usage": {
+              "language": "python",
+              "code": "from pytree import Document\n\n# Create a document object with a sample text and metadata\ndocument = Document(text=\"This is a sample text\", metadata={\"filename\": \"README.md\", \"category\": \"codebase\"})\n\n# Access the document's ID\nprint(document.doc_id)  # Output: f498072c-e615-445a-b430-9dce8918c3f5\n",
+              "description": ""
+            },
+            "name": "example",
+            "location": {
+              "start": 756,
+              "insert": 758,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 6,
+            "docLength": null
+          },
+          {
+            "id": "8e1580e9-98bf-4b81-e44e-6a1db8f39c73",
+            "ancestors": [
+              "88162fa8-1cec-f5bd-2d47-52e6389f9780"
+            ],
+            "description": "Returns a string representing the name of the class.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "\"Document\"."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Create an instance of Document\ndocument = Document(\"This is some text.\")\n\n# Call the class_name method on the document object\nprint(document.class_name())  # Output: \"Document\"\n",
+              "description": ""
+            },
+            "name": "class_name",
+            "location": {
+              "start": 763,
+              "insert": 765,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "a1c7d808-0df3-60be-6549-7322a6069da0",
+            "ancestors": [
+              "b9e45b61-4d68-e9b7-7d4c-02da02e917b3"
+            ],
+            "description": "Sets the name of its parent class to \"ImageDocument\".",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "\"ImageDocument\"."
+            },
+            "usage": {
+              "language": "python",
+              "code": "# Create an instance of the ImageDocument class\nimg_doc = ImageDocument(\"path/to/image.jpg\")\n\n# Get the name of the class using the class_name method\nclass_name = img_doc.class_name()\n\nprint(f\"The image document is a {class_name}\")\n",
+              "description": ""
+            },
+            "name": "class_name",
+            "location": {
+              "start": 797,
+              "insert": 799,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "classmethod",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  }
+]
