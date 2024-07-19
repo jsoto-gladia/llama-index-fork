@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "version": "1",
+    "updated_at": "2024-07-19T07:14:32.402Z",
+    "created_at": "2024-07-19T07:14:33.059Z",
+    "pipelines": [
+      "584299c5-9900-42cb-b988-bdad3728d17c"
+    ]
+  },
+  "lookup": [
+    [
+      "llama-index-core/llama_index/core/schema.py"
+    ]
+  ]
+}
